@@ -6,6 +6,7 @@
     "markdownlint-cli2": "0.20.0"
   },
   "scripts": {
-    "lint:md": "markdownlint-cli2 \"**/*.{md,mdc}\""
+    "lint:md": "markdownlint-cli2 \"**/*.{md,mdc}\"",
+    "gen:agents": "python3 src/scripts/generate_agents_md.py"
   }
 }

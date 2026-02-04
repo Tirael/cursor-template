@@ -63,6 +63,13 @@ python3 src/scripts/export_png_white.py
 | ------ | ---------- |
 | `CURSOR_API_KEY` | API ключ для AI PR Review (`.github/workflows/ai-pr-review.yml`) |
 
+### Настройка CURSOR_API_KEY
+
+1. Получите API ключ в [Cursor Settings](https://cursor.sh/settings)
+2. В репозитории: **Settings → Secrets and variables → Actions → New repository secret**
+3. Name: `CURSOR_API_KEY`, Value: ваш ключ
+4. Workflow автоматически запустится при открытии/обновлении PR
+
 ---
 
 ## История версий

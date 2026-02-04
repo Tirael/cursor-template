@@ -21,8 +21,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      # TODO: Pin to full SHA for security:
-      # gh api repos/sasa-tomic/argus-code-review-action/commits/v1 --jq .sha
       - uses: sasa-tomic/argus-code-review-action@b594e0d53698974a63483a6f57957f0a287eea2c
         with:
           cursor-api-key: ${{ secrets.CURSOR_API_KEY }}
