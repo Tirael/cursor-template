@@ -15,4 +15,3 @@ Worker -> DB: Load job
 Worker -> DB: Persist progress/result
 Worker --> Queue: Ack
 @enduml
-

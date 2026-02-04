@@ -1,6 +1,15 @@
-# AGENTS.md — Инструкции для AI-агентов
+---
+version: 1.0
+lastUpdated: 2026-02-04
+status: Активен
+---
+
+# AGENTS.md — Инструкции для AI-агентов (v1.0)
 
 > Проект: **EBookStore** — шаблон для проектирования интернет-магазина электронных книг.
+>
+> **Синхронизация**: этот файл — выжимка из `.cursor/rules/`. При обновлении Core
+> документов обновить и AGENTS.md (см. `.cursor/rules/ai-protocols.mdc`).
 
 ## Язык и стиль
 
@@ -27,7 +36,6 @@
 | Скрипты | `src/scripts/` |
 | Примеры кода | `src/examples/` |
 | Чек‑листы | `checklists/` |
-| Упражнения | `design-exercises/` |
 
 ## Приоритет документов
 
@@ -78,3 +86,11 @@ python3 src/scripts/export_png_white.py
 # Запуск LikeC4
 docker run --rm -v $PWD/src/c4:/data -p 5173:5173 likec4/likec4:1.48.0 start
 ```
+
+---
+
+## История версий
+
+### v1.0 (2026-02-04)
+
+- Начальная версия.

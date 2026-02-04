@@ -34,9 +34,16 @@ docker run --rm \
 ## 2. КОМАНДЫ
 
 ```bash
-npm run lint:md
+npm install        # установка зависимостей (один раз)
+npm run lint:md    # линтинг markdown
 python3 src/scripts/export_png_white.py
 ```
+
+**Почему `npm install` вместо `npx --yes`?**
+
+- Фиксированная версия в `package.json` (reproducible builds)
+- Нет сетевых запросов при каждом запуске
+- Быстрее после первой установки
 
 ---
 
@@ -48,9 +55,19 @@ python3 src/scripts/export_png_white.py
 
 ---
 
+## 4. CI/CD
+
+### Требуемые secrets
+
+| Secret | Назначение |
+| ------ | ---------- |
+| `CURSOR_API_KEY` | API ключ для AI PR Review (`.github/workflows/ai-pr-review.yml`) |
+
+---
+
 ## История версий
 
-### v1.0 (2025-01-27)
+### v1.0 (2026-02-04)
 
 - Начальная версия документа
 - Добавлено версионирование согласно протоколам работы с AI

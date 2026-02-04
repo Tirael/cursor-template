@@ -13,4 +13,3 @@ Publisher -> DB: Poll outbox
 Publisher -> Broker: Publish event
 Publisher -> DB: Mark published
 @enduml
-

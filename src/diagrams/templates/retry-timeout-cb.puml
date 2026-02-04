@@ -14,4 +14,3 @@ else Success
   Service --> Caller: Response
 end
 @enduml
-
