@@ -22,6 +22,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: sasa-tomic/argus-code-review-action@b594e0d53698974a63483a6f57957f0a287eea2c
+      - name: Check CURSOR_API_KEY
+        id: check-key
+        run: |
+          if [ -z "${{ secrets.CURSOR_API_KEY }}" ]; then
+            echo "::warning::CURSOR_API_KEY not configured, skipping AI review"
+            echo "skip=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: AI Review
+        if: steps.check-key.outputs.skip != 'true'
+        uses: sasa-tomic/argus-code-review-action@b594e0d53698974a63483a6f57957f0a287eea2c
         with:
           cursor-api-key: ${{ secrets.CURSOR_API_KEY }}

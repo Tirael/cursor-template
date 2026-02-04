@@ -31,6 +31,9 @@ status: Активен
 | `retry-timeout-cb.puml` | Retry, timeout, circuit breaker |
 | `async-job.puml` | Асинхронная задача через очередь |
 | `outbox.puml` | Transactional Outbox pattern |
+| `saga.puml` | Saga orchestration с компенсациями |
+| `event-sourcing.puml` | Event Sourcing: команда → события → проекция |
+| `cqrs.puml` | CQRS: разделение write/read paths |
 
 ## Пример использования
 

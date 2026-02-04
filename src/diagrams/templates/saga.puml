@@ -1,0 +1,33 @@
+@startuml
+participant Orchestrator
+participant "Service A" as A
+participant "Service B" as B
+participant "Service C" as C
+
+Orchestrator -> A: Step 1
+activate A
+A --> Orchestrator: Success
+deactivate A
+
+Orchestrator -> B: Step 2
+activate B
+B --> Orchestrator: Success
+deactivate B
+
+Orchestrator -> C: Step 3
+activate C
+C --> Orchestrator: Failure
+deactivate C
+
+note over Orchestrator: Compensate
+
+Orchestrator -> B: Compensate Step 2
+activate B
+B --> Orchestrator: Compensated
+deactivate B
+
+Orchestrator -> A: Compensate Step 1
+activate A
+A --> Orchestrator: Compensated
+deactivate A
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+participant Client
+participant "Command Handler" as CH
+database "Event Store" as ES
+participant "Event Publisher" as EP
+queue "Message Broker" as MB
+participant "Projection" as P
+database "Read DB" as RDB
+
+Client -> CH: Command
+CH -> ES: Load events
+ES --> CH: Event stream
+CH -> CH: Rebuild aggregate
+CH -> CH: Apply command
+CH -> ES: Append new event
+ES --> CH: OK
+
+CH -> EP: Publish event
+EP -> MB: Event
+MB -> P: Event
+P -> RDB: Update projection
+@enduml

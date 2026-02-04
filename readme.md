@@ -1,10 +1,10 @@
 ---
-version: 1.0
+version: 1.1
 lastUpdated: 2026-02-04
 status: Активен
 ---
 
-# Инструкции по работе с архитектурной документацией EBookStore (v1.0)
+# Инструкции по работе с архитектурной документацией EBookStore (v1.1)
 
 ## 0. СТРУКТУРА КАТАЛОГОВ
 
@@ -75,8 +75,14 @@ python3 src/scripts/export_png_white.py
 
 ## История версий
 
+### v1.1 (2026-02-04)
+
+- PlantUML templates: SAGA, Event Sourcing, CQRS
+- Workflow: graceful skip при отсутствии CURSOR_API_KEY
+- markdownlint: ignore patterns для .likec4, dist, build
+
 ### v1.0 (2026-02-04)
 
-- Начальная версия документа
-- Добавлено версионирование согласно протоколам работы с AI
+- Начальная версия: C4/LikeC4, PlantUML, checklists, trade-offs
+- Версионирование согласно протоколам работы с AI
 - Инструкции по запуску LikeC4 в Docker
