@@ -1,0 +1,62 @@
+---
+alwaysApply: true
+priority: critical
+version: 1.0
+lastUpdated: 2026-02-04
+---
+
+# Ядро проекта EBookStore - Критические принципы и константы (v1.0)
+
+> Минимальный набор неизменных принципов для заготовки
+> интернет-магазина электронных книг.
+
+## 1) Принципы работы
+
+- **Итеративность**: только текущая задача, маленькие шаги, без “задела”
+- **DDD**: доменная логика изолирована, bounded context не размывать
+- **Production-ready**: без временных решений
+- **Async-first**: `async/await` и `CancellationToken` вниз по стеку
+- **Детерминизм**: команды идемпотентны (см. раздел 4)
+
+## 2) Технологический стек (референс)
+
+- **Backend**: .NET 8, REST API, gRPC (внутреннее), SignalR
+- **Data**: PostgreSQL (Database per Service), Redis (cache-aside)
+- **Messaging**: Kafka (SASL/OAUTHBEARER + ACL), Schema Registry
+- **Secrets**: Vault
+- **Observability**: OpenSearch (логи), Prometheus + Grafana + AlertManager
+  (метрики), OpenTelemetry + Jaeger (трейсы)
+- **Object storage**: S3-совместимое (например, MinIO)
+- **Frontend**: Angular 21 (Tailwind, NgRx)
+
+## 3) Домен EBookStore (bounded contexts)
+
+- **Catalog**: книги, авторы, жанры, цены, наличие лицензий
+- **Search**: индекс, полнотекстовый поиск, фильтры
+- **Orders**: корзина, оформление, статусы, позиции заказа
+- **Payments**: интеграция с PSP, вебхуки, антидубликаты
+- **Library**: права доступа к купленным книгам, выдача файлов/ссылок
+- **Reporting**: отчёты и выгрузки (асинхронно)
+
+## 4) Неизменные правила
+
+1. **Tenant isolation**: любые чтения/записи обязаны учитывать `tenantId`
+2. **ABAC**: чувствительные операции проверяют `tenantId` + роль
+   - контекст доступа
+3. **Идемпотентность**: команды используют `correlationId` (UUIDv7)
+   и/или `Idempotency-Key`
+4. **Длительные операции (>5 сек)**: только асинхронно через Quartz.NET
+   (clustering) + state в PostgreSQL
+5. **Integration Events**: публикация только через Transactional Outbox
+6. **Шифрование**: HTTPS/TLS; mTLS для внутренних gRPC
+7. **Секреты**: только Vault; запрет секретов в репозитории
+8. **Аудит**: операции записи фиксируются в `audit_log` (минимум:
+   пользователь, время, действие, `tenantId`, `correlationId`)
+
+---
+
+## История версий
+
+### v1.0 (2026-02-04)
+
+- Начальная версия для шаблона EBookStore.
