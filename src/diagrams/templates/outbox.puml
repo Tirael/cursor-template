@@ -1,0 +1,16 @@
+@startuml
+participant API
+database DB
+queue Broker
+participant Publisher
+
+API -> DB: Tx begin
+API -> DB: Write business data
+API -> DB: Append outbox event
+API -> DB: Tx commit
+
+Publisher -> DB: Poll outbox
+Publisher -> Broker: Publish event
+Publisher -> DB: Mark published
+@enduml
+

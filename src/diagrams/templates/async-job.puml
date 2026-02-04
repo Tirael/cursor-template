@@ -1,0 +1,18 @@
+@startuml
+actor User
+participant API
+queue Queue
+participant Worker
+database DB
+
+User -> API: Start job
+API -> DB: Create job record
+API -> Queue: Enqueue(jobId)
+API --> User: Accepted(jobId)
+
+Worker -> Queue: Dequeue(jobId)
+Worker -> DB: Load job
+Worker -> DB: Persist progress/result
+Worker --> Queue: Ack
+@enduml
+

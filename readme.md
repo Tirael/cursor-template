@@ -9,8 +9,10 @@ status: Активен
 ## 0. СТРУКТУРА КАТАЛОГОВ
 
 - Диаграммы C4/LikeC4: `src/c4/`
+- Диаграммы PlantUML: `src/diagrams/`
 - Скрипты репозитория: `src/scripts/`
 - Примеры проектов/кода (.NET/Angular/Python): `src/examples/`
+- Чек‑листы: `checklists/`
 
 ## 1. ЗАПУСК LIKEC4 В DOCKER
 
@@ -35,6 +37,14 @@ docker run --rm \
 npx --yes markdownlint-cli2 "**/*.{md,mdc}"
 python3 src/scripts/export_png_white.py
 ```
+
+---
+
+## 3. ШАБЛОНЫ ПРОЕКТИРОВАНИЯ
+
+- Framework: `system-design-framework.md`
+- Trade-offs: `tradeoffs.md`
+- Чек‑листы: `checklists/`
 
 ---
 
