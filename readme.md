@@ -52,6 +52,7 @@ python3 src/scripts/export_png_white.py
 - Framework: `system-design-framework.md`
 - Trade-offs: `tradeoffs.md`
 - Чек‑листы: `checklists/`
+- PlantUML templates: `src/diagrams/templates/`
 
 ---
 

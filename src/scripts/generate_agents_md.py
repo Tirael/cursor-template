@@ -2,36 +2,34 @@
 """Generate AGENTS.md from .cursor/rules/, .cursor/skills/, canonical-sources.md."""
 
 import json
+import logging
 import re
+import sys
 from datetime import date
 from pathlib import Path
 
-SKILL_LABELS = {
-    "adr-authoring": "ADR",
-    "ai-protocols": "AI протоколы",
-    "architecture-review": "Финальный review",
-    "c4-modeling": "C4 моделирование",
-    "capacity-planning": "Нагрузка",
-    "data-architecture": "Данные",
-    "domain-modeling-ddd": "DDD",
-    "export-likec4-png-white": "Экспорт PNG",
-    "integration-patterns": "Интеграции",
-    "likec4-workflow": "LikeC4 workflow",
-    "markdownlint-workflow": "Markdown lint",
-    "nfr-design": "NFR/SLO",
-    "observability-architecture": "Наблюдаемость",
-    "repo-hygiene": "Гигиена репо",
-    "scaffold-examples": "Scaffold примеров",
-    "security-architecture": "Безопасность",
-    "system-design": "Координация",
-}
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+log = logging.getLogger(__name__)
 
 
 def repo_root() -> Path:
     return Path(__file__).resolve().parents[2]
 
 
+def read_file(path: Path) -> str:
+    if not path.exists():
+        log.warning(f"File not found: {path}")
+        return ""
+    try:
+        return path.read_text(encoding="utf-8")
+    except Exception as e:
+        log.warning(f"Error reading {path}: {e}")
+        return ""
+
+
 def extract_frontmatter(content: str) -> dict[str, str]:
+    if not content:
+        return {}
     match = re.match(r"^---\s*\n(.*?)\n---", content, re.DOTALL)
     if not match:
         return {}
@@ -44,41 +42,69 @@ def extract_frontmatter(content: str) -> dict[str, str]:
 
 
 def extract_title(content: str) -> str:
+    if not content:
+        return ""
     match = re.search(r"^#\s+(.+?)(?:\s+\(v[\d.]+\))?$", content, re.MULTILINE)
     return match.group(1).strip() if match else ""
 
 
 def extract_section(content: str, header_pattern: str, level: int = 2) -> str:
+    if not content:
+        return ""
     hashes = "#" * level
     pattern = rf"^{hashes}\s*{header_pattern}.*?\n(.*?)(?=^#{{{level}}}\s|\Z)"
     match = re.search(pattern, content, re.MULTILINE | re.DOTALL)
-    return match.group(1).strip() if match else ""
+    if not match:
+        log.warning(f"Section not found: {header_pattern}")
+        return ""
+    return match.group(1).strip()
 
 
 def extract_list_items(section: str) -> list[str]:
+    if not section:
+        return []
     return [line.strip() for line in section.split("\n") if line.strip().startswith("-")]
 
 
 def extract_numbered_items(section: str) -> list[str]:
-    return [
-        line.strip()
-        for line in section.split("\n")
-        if re.match(r"^\d+\.\s", line.strip())
-    ]
+    """Extract numbered items, including continuation lines."""
+    if not section:
+        return []
+    items = []
+    current_item: list[str] = []
+    for line in section.split("\n"):
+        stripped = line.strip()
+        if re.match(r"^\d+\.\s", stripped):
+            if current_item:
+                items.append(" ".join(current_item))
+            current_item = [stripped]
+        elif current_item and stripped and not stripped.startswith(("#", "-")):
+            current_item.append(stripped)
+    if current_item:
+        items.append(" ".join(current_item))
+    return items
 
 
 def extract_code_block(section: str) -> str:
+    if not section:
+        return ""
     match = re.search(r"```(?:text)?\s*\n(.*?)```", section, re.DOTALL)
     return match.group(1).strip() if match else ""
 
 
 def discover_skills(skills_dir: Path) -> list[tuple[str, str]]:
+    """Discover skills and read labels from SKILL.md frontmatter or title."""
+    if not skills_dir.exists():
+        log.warning(f"Skills directory not found: {skills_dir}")
+        return []
     skills = []
     for skill_path in sorted(skills_dir.iterdir()):
-        if skill_path.is_dir() and (skill_path / "SKILL.md").exists():
-            name = skill_path.name
-            label = SKILL_LABELS.get(name, name)
-            skills.append((label, name))
+        skill_file = skill_path / "SKILL.md"
+        if skill_path.is_dir() and skill_file.exists():
+            content = read_file(skill_file)
+            title = extract_title(content)
+            label = title.replace(" (Skill)", "").strip() if title else skill_path.name
+            skills.append((label, skill_path.name))
     return skills
 
 
@@ -101,23 +127,25 @@ def generate_paths_table(paths_section: str) -> str:
 def generate_commands_section(package_json: dict) -> str:
     scripts = package_json.get("scripts", {})
     lines = ["```bash"]
-    for name, cmd in scripts.items():
+    for name in scripts:
         lines.append(f"npm run {name}")
     lines.append("python3 src/scripts/export_png_white.py")
     lines.append("```")
     return "\n".join(lines)
 
 
-def main() -> None:
+def main() -> int:
     root = repo_root()
     rules_dir = root / ".cursor" / "rules"
     skills_dir = root / ".cursor" / "skills"
 
-    project_core = (rules_dir / "project-core.mdc").read_text(encoding="utf-8")
-    assistant_style = (rules_dir / "assistant-style.mdc").read_text(encoding="utf-8")
-    ai_protocols = (rules_dir / "ai-protocols.mdc").read_text(encoding="utf-8")
-    canonical = (root / "canonical-sources.md").read_text(encoding="utf-8")
-    package_json = json.loads((root / "package.json").read_text(encoding="utf-8"))
+    project_core = read_file(rules_dir / "project-core.mdc")
+    assistant_style = read_file(rules_dir / "assistant-style.mdc")
+    ai_protocols = read_file(rules_dir / "ai-protocols.mdc")
+    canonical = read_file(root / "canonical-sources.md")
+
+    pkg_path = root / "package.json"
+    package_json = json.loads(read_file(pkg_path)) if pkg_path.exists() else {}
 
     fm = extract_frontmatter(project_core)
     version = fm.get("version", "1.0")
@@ -125,6 +153,8 @@ def main() -> None:
 
     title = extract_title(project_core)
     project_name = title.split("-")[0].strip().replace("Ядро проекта ", "")
+    if not project_name:
+        project_name = "Project"
 
     lang_section = extract_section(assistant_style, r"1\)\s*Язык и тон")
     lang_items = "\n".join(extract_list_items(lang_section))
@@ -139,7 +169,7 @@ def main() -> None:
     priority_items = "\n".join(extract_list_items(priority_section))
     priority_note_match = re.search(
         r"(Если какой-либо документ.*?приоритет.*?)$",
-        extract_section(canonical, r"Приоритет информации"),
+        priority_section,
         re.MULTILINE,
     )
     priority_note = priority_note_match.group(1) if priority_note_match else ""
@@ -147,7 +177,9 @@ def main() -> None:
     paths_section = extract_section(canonical, r"Каноничные пути \(SSOT\)")
     paths_table = generate_paths_table(paths_section)
 
-    stopcrane_section = extract_section(ai_protocols, r"3\.\s*Протокол верификации", level=3)
+    stopcrane_section = extract_section(
+        ai_protocols, r"3\.\s*Протокол верификации", level=3
+    )
     stopcrane_block = extract_code_block(stopcrane_section)
 
     skills = discover_skills(skills_dir)
@@ -159,15 +191,13 @@ def main() -> None:
 version: {version}
 lastUpdated: {today}
 status: Активен
-generated: true
 ---
 
 # AGENTS.md — Инструкции для AI-агентов (v{version})
 
 > Проект: **{project_name}** — шаблон для проектирования информационных систем.
 >
-> **Автогенерация**: этот файл генерируется из `.cursor/rules/` и `.cursor/skills/`.
-> Не редактируйте вручную — используйте `npm run gen:agents`.
+> **Автогенерация**: `npm run gen:agents` из `.cursor/rules/` и `.cursor/skills/`.
 
 ## Язык и стиль
 
@@ -210,8 +240,9 @@ generated: true
 
     agents_path = root / "AGENTS.md"
     agents_path.write_text(output, encoding="utf-8")
-    print(f"Generated {agents_path}")
+    log.info(f"Generated {agents_path}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
