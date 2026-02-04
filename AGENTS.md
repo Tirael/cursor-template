@@ -70,7 +70,7 @@
 
 ```bash
 # Линтинг документации
-npx --yes markdownlint-cli2 "**/*.{md,mdc}"
+npm run lint:md
 
 # Экспорт C4 диаграмм в PNG
 python3 src/scripts/export_png_white.py

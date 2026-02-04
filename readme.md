@@ -34,7 +34,7 @@ docker run --rm \
 ## 2. КОМАНДЫ
 
 ```bash
-npx --yes markdownlint-cli2 "**/*.{md,mdc}"
+npm run lint:md
 python3 src/scripts/export_png_white.py
 ```
 

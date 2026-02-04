@@ -140,3 +140,7 @@ _NCrunch*
 /src/dist/**
 **/__pycache__/**
 **/*.pyc
+
+# Node.js
+node_modules/
+package-lock.json

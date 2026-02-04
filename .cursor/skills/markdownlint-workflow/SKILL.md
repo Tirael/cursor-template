@@ -14,7 +14,13 @@ lastUpdated: 2026-02-04
 ## Как запускать
 
 ```bash
-npx --yes markdownlint-cli2 "**/*.{md,mdc}"
+npm run lint:md
+```
+
+Или напрямую:
+
+```bash
+npx markdownlint-cli2@0.20.0 "**/*.{md,mdc}"
 ```
 
 ## Типовые ошибки и исправления

@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "system-design-template",
+  "description": "Template for designing information systems with C4, DDD, NFR, ADR",
+  "devDependencies": {
+    "markdownlint-cli2": "0.20.0"
+  },
+  "scripts": {
+    "lint:md": "markdownlint-cli2 \"**/*.{md,mdc}\""
+  }
+}
