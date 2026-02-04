@@ -1,0 +1,16 @@
+@startuml
+participant Caller
+participant Service
+
+Caller -> Service: Request
+alt Timeout
+  Caller <-- Service: no response
+  loop Retry (backoff)
+    Caller -> Service: Retry request
+  end
+else Circuit open
+  Caller <-- Service: Fast fail
+else Success
+  Service --> Caller: Response
+end
+@enduml

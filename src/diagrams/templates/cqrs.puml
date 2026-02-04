@@ -1,0 +1,34 @@
+@startuml
+actor User
+participant "API" as API
+
+box "Write Side" #LightBlue
+participant "Command Handler" as CH
+database "Write DB" as WDB
+end box
+
+queue "Event Bus" as EB
+
+box "Read Side" #LightGreen
+participant "Event Handler" as EH
+database "Read DB" as RDB
+end box
+
+== Write Path ==
+User -> API: Command
+API -> CH: Handle command
+CH -> WDB: Write
+WDB --> CH: OK
+CH -> EB: Publish event
+CH --> API: Success
+API --> User: 202 Accepted
+
+== Read Path ==
+EB -> EH: Event
+EH -> RDB: Update projection
+
+User -> API: Query
+API -> RDB: Read
+RDB --> API: Data
+API --> User: Response
+@enduml

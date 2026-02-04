@@ -1,0 +1,13 @@
+@startuml
+actor User
+participant "Client" as C
+participant "API" as A
+database "DB" as D
+
+User -> C: Action
+C -> A: Request (correlationId, tenantId)
+A -> D: Read/Write
+D --> A: Result
+A --> C: Response
+C --> User: UI update
+@enduml

@@ -20,4 +20,11 @@ lastUpdated: 2026-02-04
 - Безопасность: OIDC, ABAC, Vault, TLS/mTLS, аудит.
 - Интеграции: outbox для событий, идемпотентность обработчиков.
 - Наблюдаемость: логи/метрики/трейсы, health endpoints, алерты.
-- Длительные операции вынесены в асинхронные job’ы.
+- Длительные операции вынесены в асинхронные job'ы.
+
+## Детальные чек‑листы
+
+- API: `checklists/api.md`
+- DB: `checklists/db.md`
+- Scale: `checklists/scale.md`
+- SRE: `checklists/sre.md`

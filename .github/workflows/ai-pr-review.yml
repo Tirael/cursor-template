@@ -1,0 +1,37 @@
+name: AI PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+    # 5 min: AI review typically completes in 1-2 min, 5 min allows for API latency
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Check CURSOR_API_KEY
+        id: check-key
+        run: |
+          if [ -z "${{ secrets.CURSOR_API_KEY }}" ]; then
+            echo "::warning::CURSOR_API_KEY not configured, skipping AI review"
+            echo "skip=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: AI Review
+        if: steps.check-key.outputs.skip != 'true'
+        uses: sasa-tomic/argus-code-review-action@b594e0d53698974a63483a6f57957f0a287eea2c
+        with:
+          cursor-api-key: ${{ secrets.CURSOR_API_KEY }}
