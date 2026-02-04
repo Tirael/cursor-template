@@ -15,7 +15,8 @@ concurrency:
 jobs:
   ai-review:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # 5 min: AI review typically completes in 1-2 min, 5 min allows for API latency
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v5
         with:

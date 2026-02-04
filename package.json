@@ -2,11 +2,15 @@
   "private": true,
   "name": "system-design-template",
   "description": "Template for designing information systems with C4, DDD, NFR, ADR",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "devDependencies": {
     "markdownlint-cli2": "0.20.0"
   },
   "scripts": {
     "lint:md": "markdownlint-cli2 \"**/*.{md,mdc}\"",
-    "gen:agents": "python3 src/scripts/generate_agents_md.py"
+    "gen:agents": "python3 src/scripts/generate_agents_md.py",
+    "test:gen": "python3 src/scripts/test_generate_agents_md.py"
   }
 }

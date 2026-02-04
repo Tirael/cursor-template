@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generate AGENTS.md from .cursor/rules/, .cursor/skills/, canonical-sources.md."""
 
+import argparse
 import json
 import logging
 import re
@@ -134,7 +135,18 @@ def generate_commands_section(package_json: dict) -> str:
     return "\n".join(lines)
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Generate AGENTS.md from sources")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Validate and print output without writing to file",
+    )
+    return parser.parse_args()
+
+
 def main() -> int:
+    args = parse_args()
     root = repo_root()
     rules_dir = root / ".cursor" / "rules"
     skills_dir = root / ".cursor" / "skills"
@@ -239,6 +251,12 @@ status: Активен
 """
 
     agents_path = root / "AGENTS.md"
+
+    if args.dry_run:
+        print(output)
+        log.info("Dry run complete (no file written)")
+        return 0
+
     agents_path.write_text(output, encoding="utf-8")
     log.info(f"Generated {agents_path}")
     return 0
