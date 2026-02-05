@@ -3,8 +3,8 @@ name: system-design
 description: >-
   Координирующий skill для архитектурного проектирования.
   Определяет какие skills применять для C4, PlantUML, DDD, NFR, интеграций.
-version: 1.0
-lastUpdated: 2026-02-04
+version: 1.1
+lastUpdated: 2026-02-05
 ---
 
 # System Design (Skill)
@@ -31,6 +31,7 @@ lastUpdated: 2026-02-04
 | Хранение данных | `data-architecture` |
 | Наблюдаемость | `observability-architecture` |
 | Оценка нагрузки | `capacity-planning` |
+| Анализ архитектурных компромиссов (ATAM) | `atam-tradeoff-analysis` |
 | Финальная проверка | `architecture-review` |
 
 ## Каноничные пути
