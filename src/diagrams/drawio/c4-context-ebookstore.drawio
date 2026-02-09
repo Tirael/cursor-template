@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" type="device">
+  <diagram name="C4 Context - EBookStore" id="c4ctx">
+    <mxGraphModel dx="0" dy="0" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="860" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ===== RANK 0: Persons (y=40) ===== -->
+
+        <mxCell id="person_admin"
+                value="&lt;b&gt;Администратор&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Person]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Управляет каталогом,&lt;br&gt;ценами, промо-акциями"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;fontColor=#ffffff;strokeColor=#073763;fontSize=13;arcSize=50;verticalAlign=middle;align=center;spacing=8;"
+                vertex="1" parent="1">
+          <mxGeometry x="200" y="40" width="200" height="180" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="person_buyer"
+                value="&lt;b&gt;Покупатель&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Person]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Просматривает каталог,&lt;br&gt;покупает и читает книги"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;fontColor=#ffffff;strokeColor=#073763;fontSize=13;arcSize=50;verticalAlign=middle;align=center;spacing=8;"
+                vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="200" height="180" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="person_support"
+                value="&lt;b&gt;Поддержка&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Person]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Помогает с заказами&lt;br&gt;и платежами"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;fontColor=#ffffff;strokeColor=#073763;fontSize=13;arcSize=50;verticalAlign=middle;align=center;spacing=8;"
+                vertex="1" parent="1">
+          <mxGeometry x="800" y="40" width="200" height="180" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== RANK 1: Target System (y=320) ===== -->
+
+        <mxCell id="system_ebookstore"
+                value="&lt;b style=&quot;font-size:16px&quot;&gt;EBookStore&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Software System]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Интернет-магазин&lt;br&gt;электронных книг.&lt;br&gt;Каталог → Оплата → Библиотека"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;fontColor=#ffffff;strokeColor=#0B4884;fontSize=14;arcSize=10;verticalAlign=middle;align=center;spacing=8;"
+                vertex="1" parent="1">
+          <mxGeometry x="400" y="320" width="400" height="200" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== RANK 2: External Systems (y=620) ===== -->
+
+        <mxCell id="ext_psp"
+                value="&lt;b&gt;PSP&lt;/b&gt;&lt;br&gt;&lt;i&gt;[External System]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Обработка платежей"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;fontColor=#ffffff;strokeColor=#6D6D6D;fontSize=13;arcSize=10;verticalAlign=middle;align=center;spacing=8;"
+                vertex="1" parent="1">
+          <mxGeometry x="160" y="620" width="240" height="160" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ext_idp"
+                value="&lt;b&gt;Identity Provider&lt;/b&gt;&lt;br&gt;&lt;i&gt;[External System]&lt;/i&gt;&lt;br&gt;&lt;br&gt;OAuth2 / OIDC&lt;br&gt;аутентификация"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;fontColor=#ffffff;strokeColor=#6D6D6D;fontSize=13;arcSize=10;verticalAlign=middle;align=center;spacing=8;"
+                vertex="1" parent="1">
+          <mxGeometry x="480" y="620" width="240" height="160" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ext_email"
+                value="&lt;b&gt;Email / SMS Provider&lt;/b&gt;&lt;br&gt;&lt;i&gt;[External System]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Уведомления"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;fontColor=#ffffff;strokeColor=#6D6D6D;fontSize=13;arcSize=10;verticalAlign=middle;align=center;spacing=8;"
+                vertex="1" parent="1">
+          <mxGeometry x="800" y="620" width="240" height="160" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== EDGES: Persons → System ===== -->
+
+        <mxCell id="e_admin_sys"
+                value="Управляет каталогом,&lt;br&gt;ценами, промо [HTTPS]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="person_admin" target="system_ebookstore" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_buyer_sys"
+                value="Просматривает, покупает,&lt;br&gt;читает книги [HTTPS]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="person_buyer" target="system_ebookstore" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_support_sys"
+                value="Работает с заказами&lt;br&gt;и платежами [HTTPS]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="person_support" target="system_ebookstore" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== EDGES: System → External Systems ===== -->
+
+        <mxCell id="e_sys_psp"
+                value="Обрабатывает платежи&lt;br&gt;[HTTPS]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="system_ebookstore" target="ext_psp" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_sys_idp"
+                value="Аутентификация&lt;br&gt;[OAuth2 / OIDC]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="system_ebookstore" target="ext_idp" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_sys_email"
+                value="Отправляет уведомления&lt;br&gt;[HTTPS]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="system_ebookstore" target="ext_email" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -22,6 +22,7 @@ lastUpdated: 2026-02-04
 | Контейнеры (C4 Level 2) | `c4-modeling` |
 | Компоненты (C4 Level 3) | `c4-modeling` |
 | Запуск LikeC4, экспорт PNG | `likec4-workflow`, `export-likec4-png-white` |
+| C4 диаграммы в draw.io формате | `c4-drawio-diagramming` |
 | Диаграммы последовательностей (PlantUML) | см. путь `src/diagrams/` |
 | Bounded contexts, агрегаты, события | `domain-modeling-ddd` |
 | Архитектурные решения (ADR) | `adr-authoring` |
