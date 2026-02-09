@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" type="device">
+  <diagram name="C4 Container - EBookStore" id="c4cnt">
+    <mxGraphModel dx="0" dy="0" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1300" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ===== RANK 0: Persons (y=30) ===== -->
+
+        <mxCell id="person_buyer"
+                value="&lt;b&gt;Покупатель&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Person]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Просматривает каталог,&lt;br&gt;покупает и читает книги"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;fontColor=#ffffff;strokeColor=#073763;fontSize=13;arcSize=50;verticalAlign=middle;align=center;spacing=8;"
+                vertex="1" parent="1">
+          <mxGeometry x="650" y="30" width="200" height="160" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="person_admin"
+                value="&lt;b&gt;Администратор&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Person]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Управляет каталогом,&lt;br&gt;ценами, промо"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;fontColor=#ffffff;strokeColor=#073763;fontSize=13;arcSize=50;verticalAlign=middle;align=center;spacing=8;"
+                vertex="1" parent="1">
+          <mxGeometry x="950" y="30" width="200" height="160" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== SYSTEM BOUNDARY ===== -->
+
+        <mxCell id="boundary"
+                value="EBookStore [Software System]"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#1168BD;fontSize=16;fontStyle=3;fontColor=#1168BD;dashed=1;dashPattern=8 4;verticalAlign=top;align=left;spacing=10;container=0;"
+                vertex="1" parent="1">
+          <mxGeometry x="100" y="230" width="1600" height="820" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== RANK 1: Frontend (y=270) ===== -->
+
+        <mxCell id="cnt_spa"
+                value="&lt;b&gt;Single-Page Application&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Container: Angular 21]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Каталог, корзина, оплата,&lt;br&gt;библиотека, управление"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=10;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="760" y="270" width="280" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== RANK 2: API Gateway (y=440) ===== -->
+
+        <mxCell id="cnt_gateway"
+                value="&lt;b&gt;API Gateway / BFF&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Container: .NET 8]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Маршрутизация, аутентификация,&lt;br&gt;агрегация запросов"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=10;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="760" y="440" width="280" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== RANK 3: Domain Services (y=620) ===== -->
+        <!-- 6 services × 200w + 5 × 50 gap = 1450; startX = (1800-1450)/2 = 175 -->
+
+        <mxCell id="cnt_catalog"
+                value="&lt;b&gt;Catalog Service&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Container: .NET 8]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Книги, авторы,&lt;br&gt;жанры, цены"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=10;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="175" y="620" width="200" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cnt_search"
+                value="&lt;b&gt;Search Service&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Container: .NET 8]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Полнотекстовый&lt;br&gt;поиск, фильтры"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=10;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="425" y="620" width="200" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cnt_orders"
+                value="&lt;b&gt;Orders Service&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Container: .NET 8]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Корзина,&lt;br&gt;оформление заказов"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=10;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="675" y="620" width="200" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cnt_payments"
+                value="&lt;b&gt;Payments Service&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Container: .NET 8]&lt;/i&gt;&lt;br&gt;&lt;br&gt;PSP интеграция,&lt;br&gt;вебхуки, антидубликаты"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=10;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="925" y="620" width="200" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cnt_library"
+                value="&lt;b&gt;Library Service&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Container: .NET 8]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Доступ к купленным&lt;br&gt;книгам, выдача файлов"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=10;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="1175" y="620" width="200" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cnt_reporting"
+                value="&lt;b&gt;Reporting Service&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Container: .NET 8]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Отчёты, экспорты&lt;br&gt;(асинхронно)"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=10;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="1425" y="620" width="200" height="110" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== RANK 4: Data Stores per Service (y=790) ===== -->
+        <!-- Aligned directly under each service — zero-crossing layout -->
+
+        <mxCell id="db_catalog"
+                value="&lt;b&gt;Catalog DB&lt;/b&gt;&lt;br&gt;&lt;i&gt;[PostgreSQL]&lt;/i&gt;"
+                style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;size=15;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="175" y="790" width="200" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="db_search"
+                value="&lt;b&gt;Search Index&lt;/b&gt;&lt;br&gt;&lt;i&gt;[OpenSearch]&lt;/i&gt;"
+                style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;size=15;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="425" y="790" width="200" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="db_orders"
+                value="&lt;b&gt;Orders DB&lt;/b&gt;&lt;br&gt;&lt;i&gt;[PostgreSQL]&lt;/i&gt;"
+                style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;size=15;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="675" y="790" width="200" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="db_payments"
+                value="&lt;b&gt;Payments DB&lt;/b&gt;&lt;br&gt;&lt;i&gt;[PostgreSQL]&lt;/i&gt;"
+                style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;size=15;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="925" y="790" width="200" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="db_library"
+                value="&lt;b&gt;Library DB&lt;/b&gt;&lt;br&gt;&lt;i&gt;[PostgreSQL]&lt;/i&gt;"
+                style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;size=15;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="1175" y="790" width="200" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="db_reporting"
+                value="&lt;b&gt;Reporting DB&lt;/b&gt;&lt;br&gt;&lt;i&gt;[PostgreSQL]&lt;/i&gt;"
+                style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;size=15;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="1425" y="790" width="200" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== RANK 5: Shared Infrastructure (y=940) ===== -->
+        <!-- 3 × 200w + 2 × 125 gap = 850; startX = (1800-850)/2 = 475 -->
+
+        <mxCell id="infra_redis"
+                value="&lt;b&gt;Redis&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Cache]&lt;/i&gt;"
+                style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;size=15;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="475" y="940" width="200" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="infra_kafka"
+                value="&lt;b&gt;Kafka&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Message Broker]&lt;/i&gt;"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=10;dashed=1;dashPattern=8 4;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="800" y="940" width="200" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="infra_s3"
+                value="&lt;b&gt;S3 Storage&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Object Storage]&lt;/i&gt;"
+                style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;size=15;verticalAlign=middle;align=center;spacing=6;"
+                vertex="1" parent="1">
+          <mxGeometry x="1125" y="940" width="200" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== RANK 6: External Systems (y=1120) ===== -->
+
+        <mxCell id="ext_psp"
+                value="&lt;b&gt;PSP&lt;/b&gt;&lt;br&gt;&lt;i&gt;[External System]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Обработка платежей"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;fontColor=#ffffff;strokeColor=#6D6D6D;fontSize=13;arcSize=10;verticalAlign=middle;align=center;spacing=8;"
+                vertex="1" parent="1">
+          <mxGeometry x="200" y="1120" width="240" height="130" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ext_idp"
+                value="&lt;b&gt;Identity Provider&lt;/b&gt;&lt;br&gt;&lt;i&gt;[External System]&lt;/i&gt;&lt;br&gt;&lt;br&gt;OAuth2 / OIDC"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;fontColor=#ffffff;strokeColor=#6D6D6D;fontSize=13;arcSize=10;verticalAlign=middle;align=center;spacing=8;"
+                vertex="1" parent="1">
+          <mxGeometry x="780" y="1120" width="240" height="130" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ext_email"
+                value="&lt;b&gt;Email / SMS Provider&lt;/b&gt;&lt;br&gt;&lt;i&gt;[External System]&lt;/i&gt;&lt;br&gt;&lt;br&gt;Уведомления"
+                style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;fontColor=#ffffff;strokeColor=#6D6D6D;fontSize=13;arcSize=10;verticalAlign=middle;align=center;spacing=8;"
+                vertex="1" parent="1">
+          <mxGeometry x="1360" y="1120" width="240" height="130" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== EDGES: Persons → SPA ===== -->
+
+        <mxCell id="e_buyer_spa"
+                value="Использует [HTTPS]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="person_buyer" target="cnt_spa" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_admin_spa"
+                value="Управляет [HTTPS]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="person_admin" target="cnt_spa" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== EDGES: SPA → Gateway ===== -->
+
+        <mxCell id="e_spa_gw"
+                value="API вызовы [HTTPS / JSON]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="cnt_spa" target="cnt_gateway" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== EDGES: Gateway → Services (fan-out) ===== -->
+
+        <mxCell id="e_gw_catalog"
+                value="[gRPC / mTLS]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="cnt_gateway" target="cnt_catalog" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_gw_search"
+                value="[gRPC / mTLS]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="cnt_gateway" target="cnt_search" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_gw_orders"
+                value="[gRPC / mTLS]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="cnt_gateway" target="cnt_orders" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_gw_payments"
+                value="[gRPC / mTLS]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="cnt_gateway" target="cnt_payments" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_gw_library"
+                value="[gRPC / mTLS]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="cnt_gateway" target="cnt_library" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_gw_reporting"
+                value="[gRPC / mTLS]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="cnt_gateway" target="cnt_reporting" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== EDGES: Services → Data Stores (straight down, zero-crossing) ===== -->
+
+        <mxCell id="e_catalog_db"
+                value="Читает / пишет [SQL]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="cnt_catalog" target="db_catalog" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_search_idx"
+                value="Индексирует / ищет [REST]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="cnt_search" target="db_search" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_orders_db"
+                value="Читает / пишет [SQL]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="cnt_orders" target="db_orders" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_payments_db"
+                value="Читает / пишет [SQL]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="cnt_payments" target="db_payments" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_library_db"
+                value="Читает / пишет [SQL]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="cnt_library" target="db_library" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_reporting_db"
+                value="Читает [SQL]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="cnt_reporting" target="db_reporting" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== EDGES: Key external integrations ===== -->
+
+        <mxCell id="e_payments_psp"
+                value="Обработка платежей [HTTPS]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="cnt_payments" target="ext_psp" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_gw_idp"
+                value="Аутентификация [OAuth2]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="cnt_gateway" target="ext_idp" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== EDGES: Shared infrastructure ===== -->
+
+        <mxCell id="e_orders_kafka"
+                value="Публикация событий&lt;br&gt;[Outbox / Kafka]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;dashed=1;dashPattern=8 4;"
+                edge="1" source="cnt_orders" target="infra_kafka" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_library_s3"
+                value="Хранение / выдача файлов&lt;br&gt;[S3 API]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;"
+                edge="1" source="cnt_library" target="infra_s3" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_catalog_redis"
+                value="Кэширование [Redis]"
+                style="html=1;fontSize=11;fontColor=#404040;strokeColor=#666666;strokeWidth=2;endArrow=blockThin;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;dashed=1;dashPattern=8 4;"
+                edge="1" source="cnt_catalog" target="infra_redis" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
