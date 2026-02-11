@@ -1,0 +1,22 @@
+{
+  "diagram": { "name": "EBookStore (C4 / Container)" },
+  "nodes": [
+    { "id": "customer", "label": "Покупатель", "kind": "Person", "width": 160, "height": 80 },
+    { "id": "ebookstore", "label": "EBookStore", "kind": "SoftwareSystem", "width": 220, "height": 90 },
+    { "id": "web", "label": "Web App (Angular)", "kind": "Container", "width": 220, "height": 90 },
+    { "id": "api", "label": "API (.NET 8)", "kind": "Container", "width": 220, "height": 90 },
+    { "id": "pg", "label": "PostgreSQL", "kind": "Container", "width": 200, "height": 90 },
+    { "id": "kafka", "label": "Kafka", "kind": "Container", "width": 180, "height": 90 },
+    { "id": "psp", "label": "PSP", "kind": "SoftwareSystem", "width": 160, "height": 80 }
+  ],
+  "edges": [
+    { "source": "customer", "target": "web", "label": "использует" },
+    { "source": "web", "target": "api", "label": "REST" },
+    { "source": "api", "target": "pg", "label": "SQL" },
+    { "source": "api", "target": "kafka", "label": "events" },
+    { "source": "api", "target": "psp", "label": "payments" },
+    { "source": "web", "target": "ebookstore", "label": "UI" },
+    { "source": "api", "target": "ebookstore", "label": "backend" }
+  ]
+}
+
