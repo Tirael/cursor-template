@@ -20,6 +20,17 @@ python3 src/scripts/c4_drawio_autolayout.py \
 
 Откройте `out.drawio` в diagrams.net (draw.io).
 
+## Контекстная диаграмма (System Context)
+
+Генерация:
+
+```bash
+python3 src/scripts/c4_drawio_autolayout.py \
+  --input src/examples/python/c4-drawio-autolayout/spec_context.json \
+  --output src/examples/python/c4-drawio-autolayout/context.drawio \
+  --h-gap 320 --v-gap 140 --node-pad 14 --reserve-radius 0 --expand-tries 14
+```
+
 ## Формат спека (кратко)
 
 - `diagram.name`: имя страницы в draw.io

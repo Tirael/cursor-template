@@ -1,0 +1,24 @@
+{
+  "diagram": { "name": "EBookStore (C4 / System Context)" },
+  "nodes": [
+    { "id": "customer", "label": "Покупатель", "kind": "Person", "width": 160, "height": 80 },
+    { "id": "admin", "label": "Администратор", "kind": "Person", "width": 180, "height": 80 },
+    { "id": "support", "label": "Поддержка", "kind": "Person", "width": 160, "height": 80 },
+
+    { "id": "ebookstore", "label": "EBookStore", "kind": "SoftwareSystem", "width": 240, "height": 100 },
+
+    { "id": "idp", "label": "IdP (OAuth2/OIDC)", "kind": "SoftwareSystem", "width": 200, "height": 80 },
+    { "id": "psp", "label": "PSP", "kind": "SoftwareSystem", "width": 160, "height": 80 },
+    { "id": "notify", "label": "Email/SMS провайдер", "kind": "SoftwareSystem", "width": 220, "height": 80 }
+  ],
+  "edges": [
+    { "source": "customer", "target": "ebookstore", "label": "покупка, библиотека" },
+    { "source": "admin", "target": "ebookstore", "label": "управление каталогом/ценами" },
+    { "source": "support", "target": "ebookstore", "label": "поддержка заказов/платежей" },
+
+    { "source": "ebookstore", "target": "idp", "label": "аутентификация" },
+    { "source": "ebookstore", "target": "psp", "label": "платежи" },
+    { "source": "ebookstore", "target": "notify", "label": "уведомления" }
+  ]
+}
+
